@@ -1,0 +1,69 @@
+---
+description: Acordos de escrita de documentação no Apto53-Docs (ERS, rastreabilidade, ADR/DCR, templates)
+alwaysApply: true
+---
+
+# Acordos de documentação — Apto53-Docs
+
+Este repositório é a **fonte da verdade** da documentação de **requisitos e decisões** do produto **Apto 53**. Estas regras valem **apenas** para o trabalho de documentação **dentro deste repo**.
+
+Decisões de organização documental: [ADR-02](DOCS/diario-decisoes/ADR/ADR-02-repositorio-docs-fonte-verdade.md), [DCR-01](DOCS/diario-decisoes/DCR/DCR-01-processo-pull-request.md). Decisões técnicas do produto (quando relevantes ao texto): ADR-01, ADR-03, ADR-04 em [`DOCS/diario-decisoes/ADR/`](DOCS/diario-decisoes/ADR/).
+
+## Antes de considerar uma tarefa de docs concluída
+
+1. Atualizar [`DOCS/especificacao_requisitos_software.md`](DOCS/especificacao_requisitos_software.md) — UC/RNF correspondente (criar ou ajustar se o comportamento documentado for novo ou mudou).
+2. Atualizar [`DOCS/rastreabilidade_requisitos.md`](DOCS/rastreabilidade_requisitos.md) — inventário e matriz (IDs, colunas de rastreio, ADR/DCR).
+3. Se a mudança for só de detalhe sem novo requisito, **confirmar** que já existe UC/RNF que cobre o comportamento; se não cobrir, documentar.
+4. Manter [`DOCS/contexto_modulos.md`](DOCS/contexto_modulos.md) como **ponte** (índice/links), não como mapa de paths de implementação.
+5. Se couber decisão arquitetural ou modelagem de processo/workflow/regras, registrar ADR/DCR (ver abaixo).
+
+Regras gerais:
+
+- Não inventar requisitos fora do domínio do produto.
+- Manter identificadores estáveis (`UC##`, `RNF##`, `ADR-##`, `DCR-##`).
+- Não duplicar neste repo mapas de implementação de código (paths/handlers); isso fica fora do escopo desta documentação de requisitos.
+
+## Formato docs-delta (entrada para atualizar docs)
+
+Quando uma mudança de comportamento for documentada a partir de um delta, usar (ou exigir) este bloco para manter a rastreabilidade:
+
+```markdown
+## docs-delta
+- requisitos: UC09, RNF08
+- impacto: api   # api | web | ambos
+- resumo: <o que mudou em uma frase>
+- arquivos-docs: DOCS/rastreabilidade_requisitos.md, DOCS/especificacao_requisitos_software.md
+```
+
+Sem ID de requisito no delta, a mudança não está rastreável neste repositório. O processo de PR está em [DCR-01](DOCS/diario-decisoes/DCR/DCR-01-processo-pull-request.md).
+
+## Templates
+
+Modelos em [`templates/`](templates/):
+
+- ERS: [`templates/especificacao_requsitos_software.md`](templates/especificacao_requsitos_software.md)
+- Diário (ADR e DCR): [`templates/diario-decisoes.md`](templates/diario-decisoes.md)
+- Contexto por módulo (esqueleto): [`templates/contexto_modulos.md`](templates/contexto_modulos.md)
+
+## ADR — Architecture Decision Record
+
+Documento Markdown de **decisão arquitetural significativa** (contexto, opções, decisão, consequências).
+
+- **Template:** [`templates/diario-decisoes.md`](templates/diario-decisoes.md)
+- **Onde gravar:** [`DOCS/diario-decisoes/ADR/`](DOCS/diario-decisoes/ADR/) como `ADR-##-titulo-curto.md`
+- **Não usar** para detalhe trivial que não fixe padrão do sistema.
+
+## DCR — Dynamic Condition Response Graphs
+
+Notação/documentação de **processos, workflows e regras complexas** (mesma estrutura de template do ADR).
+
+- **Template:** [`templates/diario-decisoes.md`](templates/diario-decisoes.md)
+- **Onde gravar:** [`DOCS/diario-decisoes/DCR/`](DOCS/diario-decisoes/DCR/) como `DCR-##-titulo-curto.md`
+- ADR = *por que* (arquitetura); DCR = *como* processos/regras se relacionam.
+
+## Contexto neste repo
+
+- Ponte/índice: [`DOCS/contexto_modulos.md`](DOCS/contexto_modulos.md)
+- Template de esqueleto: [`templates/contexto_modulos.md`](templates/contexto_modulos.md)
+
+Ao escrever docs aqui, atualize ERS, rastreabilidade e ADR/DCR conforme a mudança de **requisito ou decisão**. Não use estas rules para orientar alterações em outros repositórios.
